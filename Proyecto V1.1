@@ -35,12 +35,12 @@ public class Proyecto {
             case "resta":
                 count = Resta(dificultad);
                 break;
-            /*case "multiplicar":
-    Multiplication();
+            case "multiplicar":
+    count = Multiplicacion(dificultad);
     break;
     case "division":
-    division();
-    break;*/
+    count = Division(dificultad);
+    break;
             default:
         }
 
@@ -245,4 +245,127 @@ public class Proyecto {
         }
         return count;
     }
+    static int Multiplicacion(int dificultad){
+            int preguntas = 0, count = 0, multiplicacion, azar1, azar2, respuesta;
+        Scanner sc3 = new Scanner(System.in);
+        Random rnd = new Random();//Generador de numeros aleatorios
+
+        switch (dificultad) {// EN ESTE SWITCH DEPENDIENDO EN QUE CURSO ESTE EL USUARIO ASIGNAMOS LA DIFICULTAD
+            case 1:
+                do {
+                    azar1 = rnd.nextInt(8) + 1;//generamos un numero del 0 al 8 y le sumamos 1 para que nunca salga 0
+                    azar2 = rnd.nextInt(8) + 1;
+                    multiplicacion = azar1 * azar2;
+                    System.out.println(azar1 + " * " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == multiplicacion) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    } else {
+                        System.out.println("Es incorrecto");
+
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+                return count;
+                case 2:
+                do {
+                    azar1 = rnd.nextInt(97) + 2;//generamos un numero del 0 al 8 y le sumamos 1 para que nunca salga 0
+                    azar2 = rnd.nextInt(8) + 1;
+                    multiplicacion = azar1 * azar2;
+                    System.out.println(azar1 + " * " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == multiplicacion) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    } else {
+                        System.out.println("Es incorrecto");
+
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+                return count;
+                case 3:
+                do {
+                    azar1 = rnd.nextInt(197) + 2;//generamos un numero del 0 al 8 y le sumamos 1 para que nunca salga 0
+                    azar2 = rnd.nextInt(8) + 1;
+                    multiplicacion = azar1 * azar2;
+                    System.out.println(azar1 + " * " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == multiplicacion) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    } else {
+                        System.out.println("Es incorrecto");
+
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+                return count;
+                
+                case 4:
+                do {
+                    azar1 = rnd.nextInt(97) + 2;//generamos un numero del 0 al 8 y le sumamos 1 para que nunca salga 0
+                    azar2 = rnd.nextInt(97) + 2;
+                    multiplicacion = azar1 * azar2;
+                    System.out.println(azar1 + " * " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == multiplicacion) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    } else {
+                        System.out.println("Es incorrecto");
+
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+               
+        }
+         return count;
+}
+        static int Division(int dificultad){
+             int preguntas = 0, count = 0, division, azar1, azar2, respuesta;
+        Scanner sc3 = new Scanner(System.in);
+        Random rnd = new Random();//Generador de numeros aleatorios
+
+        switch (dificultad) {
+        case 1:
+                do {
+                    do{
+                    azar1 = rnd.nextInt(8) + 1;//generamos un numero del 0 al 8 y le sumamos 1 para que nunca salga 0
+                    azar2 = rnd.nextInt(8) + 1;
+                    }while(azar1%azar2!=0);
+                   
+                    division=azar1/azar2;
+                    System.out.println(azar1 + " / " + azar2 + " = ");        
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (division%respuesta==0) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    } else {
+                        System.out.println("Es incorrecto");
+
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+                
+        }
+        return count;
+        }
+        
 }
