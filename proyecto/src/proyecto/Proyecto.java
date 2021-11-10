@@ -1,5 +1,5 @@
 
-/*
+        /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -72,7 +72,7 @@ public class Proyecto {
                     System.out.println("Introduce 2 numeros");
                     x = sc.nextInt();
                     y = sc.nextInt();
-                    System.out.println("MCD = " + euclid(x, y));
+                    System.out.println("mcd= "+euclid(x,y));
 
                 default:
             }
@@ -515,4 +515,7 @@ public class Proyecto {
         }
         return euclid(b, a % b);
     }
-}
+}  
+
+     
+
