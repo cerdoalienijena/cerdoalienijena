@@ -8,6 +8,9 @@ package proyecto;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  *
@@ -17,7 +20,7 @@ import java.util.Scanner;
 public class Proyecto {
 
     
-    public static int i= 0;
+    public static int countdownStarter = 11;
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
@@ -108,38 +111,43 @@ public class Proyecto {
         switch (dificultad) {// EN ESTE SWITCH DEPENDIENDO EN QUE CURSO ESTE EL USUARIO ASIGNAMOS LA DIFICULTAD
             case 1:
                 
+                    
                 do {
+                    Time();
                     
                     azar1 = rnd.nextInt(8) + 1;//generamos un numero del 0 al 8 y le sumamos 1 para que nunca salga 0
                     azar2 = rnd.nextInt(8) + 1;
                     suma = azar1 + azar2;
                     System.out.println(azar1 + " + " + azar2 + " = ");
                     System.out.println("Cual es la respuesta");
-                   
-                    Time();
+
                     respuesta = sc3.nextInt();
-                    
-                    do{
-                        
-                    if (respuesta == suma) {
+
+                    if (respuesta == suma && countdownStarter != 1) {
                         System.out.println("Es correcto");
                         count++;
-                        
-                        break;
-//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
-                    }else if (respuesta !=suma) {
+                        countdownStarter=0;
+                    } //Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    else if (respuesta != suma && countdownStarter != 1) {
                         System.out.println("Es incorrecto prueba otra vez");
                         System.out.println("Cual es la respuesta");
                         respuesta = sc3.nextInt();
-                    }
-                    }while (i !=15);
+                        if(respuesta != suma){
+                            System.out.println("Es incorrecto");
+                            
+                        }
+                    } else if (countdownStarter == 1) {
+                        System.out.println("Se acabo el tiempo");
                         
-                    i=0;
+                    }
+
                     preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                    
                 } while (preguntas != 10);//Este ciclo no acaba hasta que no haya preguntado 10 veces
+                
                 System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
                 return count;
-                
+
             case 2:
                 do {
                     azar1 = rnd.nextInt(89) + 10;//la dificultad aumenta
@@ -537,20 +545,37 @@ public class Proyecto {
         }
         return euclid(b, a % b);
     }
+    
+    
+    
+    
         public static void Time(){
-        while (i < 5){
-             System.out.println(i);
-            i++;
+               
+         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+         
+        final Runnable runnable = new Runnable() {
             
-            try {
-            Thread.sleep(1000);
-            } catch(InterruptedException e){
-            e.printStackTrace();
-            }
-}
-        }
 
+            
+            public void run() {
+
+                System.out.println(countdownStarter-1);
+                countdownStarter--;
+       
+               
+                if (countdownStarter < 0) {
+                    System.out.println("Timer Over!");
+                    scheduler.shutdown();
+                    
+                      
+                }
+            }
+        };
+        scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
+    }
 }
+
+
   
 
      
