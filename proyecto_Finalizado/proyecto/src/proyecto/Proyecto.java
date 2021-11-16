@@ -26,10 +26,12 @@ public class Proyecto {
 
         Scanner sc = new Scanner(System.in);
         Scanner sc1 = new Scanner(System.in);
+        Random rnd = new Random();
 
-        int dificultad, operacion, x, y, result;
+        int dificultad, operacion, result, respuesta;
+        int x, y;
         String Usuario;
-        char exit = ' ';
+        char exit;
         System.out.println("Nombre de usuario: ");
         Usuario = sc.nextLine();
 
@@ -41,7 +43,8 @@ public class Proyecto {
                     + "3. Multiplication \n"
                     + "4. Division \n"
                     + "5. Euclidean algorithm \n"
-                    + "6. Mod \n");
+                    + "6. Mod \n"
+                    + "7. Exit \n");
             operacion = sc.nextInt();
 
             /**
@@ -74,24 +77,31 @@ public class Proyecto {
 
                     break;
                 case 5:
-                    //En el algoritmo de euclides se piden 2 numeros y estos se mandan a la funcion
-                    System.out.println("Introduce 2 numeros");
-                    x = sc.nextInt();
-                    y = sc.nextInt();
-                    System.out.println("mcd= " + euclid(x, y));
+                    int z = 1;
+
+                    do {
+                        x = rnd.nextInt(998) + 1;
+                        y = rnd.nextInt(89) + 10;
+                        z = euclid(x, y);
+                    } while (z == 1);
+
+                    System.out.println("El MCD de " + x + " y " + y + " = ");
+                    respuesta = sc.nextInt();
+                    if (respuesta == euclid(x, y)) {
+                        System.out.println("Es correcto");
+                    } else {
+                        System.out.println("Es incorrecto " + euclid(x, y));
+                    }
                     break;
                 case 6:
-                    System.out.println("Introduce 2 numeros");
-                    x = sc.nextInt();
-                    y = sc.nextInt();
-                    while (x == 0 || y == 0) {
-                        System.out.println("No se puede dividir entre cero intruduce otros numeros");
-                        x = sc.nextInt();
-                        y = sc.nextInt();
-                    }
-                    System.out.println("el modular de " + x + " e " + y + " = " + mod(x, y));
+                    System.out.print("Nivel de dificultad por curso(1-4): ");
+                    dificultad = sc.nextInt();
+                    Mod(dificultad);
                     break;
+                case 7:
+                    System.exit(0);
                 default:
+
             }
 
             System.out.println("\nDo you want to try again? " + Usuario);
@@ -176,9 +186,18 @@ public class Proyecto {
                         System.out.println("Es correcto");
                         count++;
 
-                    } else {
+                    } //Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
+                    if (respuesta != suma && countdownStarter != 1) {
+                        System.out.println("Es incorrecto prueba otra vez");
+                        System.out.println("Cual es la respuesta");
+                        respuesta = sc3.nextInt();
+                    }
+                    if (respuesta != suma && countdownStarter == 1) {
                         System.out.println("Es incorrecto");
 
+                    } else if (countdownStarter <= 1 && respuesta == suma) {
+                        System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
+                        Time();
                     }
                     preguntas++;
                 } while (preguntas != 10);
@@ -187,6 +206,8 @@ public class Proyecto {
                 return count;
             case 3:
                 do {
+                    countdownStarter = 10;
+                    Time();
                     azar1 = rnd.nextInt(89) + 10;
                     azar2 = rnd.nextInt(89) + 10;
                     suma = azar1 + azar2;
@@ -589,13 +610,21 @@ public class Proyecto {
                     System.out.println(azar1 + " / " + azar2 + " = ");
                     System.out.println("Cual es la respuesta");
                     respuesta = sc3.nextInt();
-                    if (division % respuesta == 0) {
+                    if (respuesta == division) {
                         System.out.println("Es correcto");
                         count++;
-//Si es correcta la respuesta sumamos 1 en el contador de preguntas correctas
-                    } else {
+//Si es correcta la respuesta sumamso 1 en el contador de preguntas correctas
+                    }
+                    if (respuesta != division && countdownStarter != 1) {
+                        System.out.println("Es incorrecto prueba otra vez");
+                        System.out.println("Cual es la respuesta");
+                        respuesta = sc3.nextInt();
+                    }
+                    if (respuesta != division && countdownStarter == 1) {
                         System.out.println("Es incorrecto");
-
+                    } else if (countdownStarter <= 1 && respuesta == division) {
+                        System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
+                        Time();
                     }
                     preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
                 } while (preguntas != 10);
@@ -606,13 +635,12 @@ public class Proyecto {
                 Time();
                 do {
                     countdownStarter = 10;
-                    do {
-                        azar1 = rnd.nextInt(89) + 10;
-                        azar2 = rnd.nextInt(8) + 1;
-                    } while (azar1 % azar2 != 0);
 
-                    division = azar1 / azar2;
-                    System.out.println(azar1 + " / " + azar2 + " = ");
+                    azar1 = rnd.nextInt(89) + 10;
+                    azar2 = rnd.nextInt(8) + 1;
+
+                    division = azar1 % azar2;
+                    System.out.println(azar1 + " % " + azar2 + " = ");
                     System.out.println("Cual es la respuesta");
                     respuesta = sc3.nextInt();
                     if (respuesta == division) {
@@ -631,7 +659,6 @@ public class Proyecto {
                         System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
                         Time();
                     }
-                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
                 } while (preguntas != 10);
                 System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
                 return count;
@@ -714,37 +741,166 @@ public class Proyecto {
      *
      * Hace la division de los 2 numeros insertados y devuelve el resto
      *
-     * @param a Dividendo (Si es mas pequeño que el divisor este se vuelve el
-     * divisor)
-     * @param b Divisor (Si es mas grande que el dividendo este se vuelve el
-     * dividendo)
+     * @param dificultad
      * @return Devuelve el resultado para mostrarlo en pantalla
      */
-    public static int mod(int a, int b) {
-        int result = 0;
-        if (b > a) {
-            result = b % a;
-        } else if (a > b) {
-            result = a % b;
-        }
+    public static int Mod(int dificultad) {
+        int preguntas = 0, count = 0, result = 0, azar1, azar2, respuesta;
+        Scanner sc3 = new Scanner(System.in);
+        Random rnd = new Random();//Generador de numeros aleatorios
 
+        switch (dificultad) {
+            case 1:
+                countdownStarter = 10;
+                Time();
+                do {
+                    countdownStarter = 10;
+
+                    azar1 = rnd.nextInt(8) + 1;
+                    azar2 = rnd.nextInt(8) + 1;
+
+                    result = azar1 % azar2;
+                    System.out.println(azar1 + " / " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == result) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamso 1 en el contador de preguntas correctas
+                    }
+                    if (respuesta != result && countdownStarter != 1) {
+                        System.out.println("Es incorrecto prueba otra vez");
+                        System.out.println("Cual es la respuesta");
+                        respuesta = sc3.nextInt();
+                    }
+                    if (respuesta != result && countdownStarter == 1) {
+                        System.out.println("Es incorrecto");
+                    } else if (countdownStarter <= 0 && respuesta == result) {
+                        System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
+                        Time();
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+                break;
+            case 2:
+                countdownStarter = 10;
+                Time();
+
+                do {
+                    countdownStarter = 10;
+                    do {
+                        azar1 = rnd.nextInt(89) + 10;
+                        azar2 = rnd.nextInt(8) + 1;
+                    } while (azar1 % azar2 != 0);
+
+                    result = azar1 % azar2;
+                    System.out.println(azar1 + " / " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == result) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamso 1 en el contador de preguntas correctas
+                    }
+                    if (respuesta != result && countdownStarter != 1) {
+                        System.out.println("Es incorrecto prueba otra vez");
+                        System.out.println("Cual es la respuesta");
+                        respuesta = sc3.nextInt();
+                    }
+                    if (respuesta != result && countdownStarter == 1) {
+                        System.out.println("Es incorrecto");
+                    } else if (countdownStarter <= 1 && respuesta == result) {
+                        System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
+                        Time();
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+                break;
+            case 3:
+                countdownStarter = 10;
+                Time();
+                do {
+                    countdownStarter = 10;
+                    do {
+                        azar1 = rnd.nextInt(89) + 10;
+                        azar2 = rnd.nextInt(89) + 10;
+                    } while (azar1 % azar2 != 0);
+
+                    result = azar1 % azar2;
+                    System.out.println(azar1 + " / " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == result) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamso 1 en el contador de preguntas correctas
+                    }
+                    if (respuesta != result && countdownStarter != 1) {
+                        System.out.println("Es incorrecto prueba otra vez");
+                        System.out.println("Cual es la respuesta");
+                        respuesta = sc3.nextInt();
+                    }
+                    if (respuesta != result && countdownStarter == 1) {
+                        System.out.println("Es incorrecto");
+                    } else if (countdownStarter <= 1 && respuesta == result) {
+                        System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
+                        Time();
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+
+            case 4:
+                countdownStarter = 10;
+                Time();
+                do {
+                    countdownStarter = 10;
+                    do {
+                        azar1 = rnd.nextInt(899) + 100;
+                        azar2 = rnd.nextInt(89) + 10;
+                    } while (azar1 % azar2 != 0);
+
+                    result = azar1 % azar2;
+                    System.out.println(azar1 + " / " + azar2 + " = ");
+                    System.out.println("Cual es la respuesta");
+                    respuesta = sc3.nextInt();
+                    if (respuesta == result) {
+                        System.out.println("Es correcto");
+                        count++;
+//Si es correcta la respuesta sumamso 1 en el contador de preguntas correctas
+                    }
+                    if (respuesta != result && countdownStarter != 1) {
+                        System.out.println("Es incorrecto prueba otra vez");
+                        System.out.println("Cual es la respuesta");
+                        respuesta = sc3.nextInt();
+                    }
+                    if (respuesta != result && countdownStarter == 1) {
+                        System.out.println("Es incorrecto");
+                    } else if (countdownStarter <= 1 && respuesta == result) {
+                        System.out.println("La respuesta es correcta pero el tiempo se ha acabado");
+                        Time();
+                    }
+                    preguntas++; //cada vez que hay un ciclo del programa contamos 1 para saber cuantas preguntas hemos preguntado
+                } while (preguntas != 10);
+                System.out.println("Tu puntuacion es " + count + " sobre " + preguntas);
+        }
         return result;
+
     }
 
     /**
-     *
      * En esta funcion se hace el algoritmo de euclides
      *
-     * @param a Primer numero insertado por el usuario
-     * @param b Segundo numero insertado por el usario
+     * @param a numero aleatorio 1
+     * @param b numero aleatorio 2
      * @return Devuelve el mcd de los 2 numero inseratados
      */
-    static int euclid(int a, int b) {
+    public static int euclid(int a, int b) {
 
         if (b == 0) {
             return a;
-        } else {
-            System.out.println(a + "%" + b + "=" + a % b);
         }
         return euclid(b, a % b);
     }
