@@ -79,6 +79,7 @@ public class Proyecto {
                     x = sc.nextInt();
                     y = sc.nextInt();
                     System.out.println("mcd= " + euclid(x, y));
+                    break;
                 case 6:
                     System.out.println("Introduce 2 numeros");
                     x = sc.nextInt();
@@ -89,6 +90,7 @@ public class Proyecto {
                         y = sc.nextInt();
                     }
                     System.out.println("el modular de " + x + " e " + y + " = " + mod(x, y));
+                    break;
                 default:
             }
 
@@ -770,7 +772,3 @@ public class Proyecto {
         scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
     }
 }
-
-
-
-
